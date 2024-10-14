@@ -1,6 +1,7 @@
 package main;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -16,6 +17,8 @@ import recommendations.POMRecommendation;
 public class main {
 
 	public static void main(String[] args) {
+		
+		Map<String, Integer> FinalChanges = new HashMap<>();
 		
 		// prerequisites
 		// cache setup
@@ -47,31 +50,31 @@ public class main {
 			tempPomDependencies.add(pomDependency);
 			Map<String, Integer> leastVulCountCombinationMap = POMOptimization.optimizePOMRecommendations(pomDependency, pomRecommendations);
 			
-			String key = "";
-			int leastVulCount = 0;
-			for (Map.Entry<String, Integer> entry : leastVulCountCombinationMap.entrySet()) {
-//			    System.out.println("Key: " + entry.getKey() + ", Value: " + entry.getValue().size());
-			    key = entry.getKey();
-			    leastVulCount = entry.getValue();
-			}
-
-			System.out.println();
-			System.out.println("############################################ Final Changes #################################");
-
-			String[] arr = key.split(",");
-			for(String a : arr)
-			{
-				System.out.println();
-				String[] brr = a.split("#");
-				System.out.println(brr[0]);
-				System.out.println(brr[1]);
-				System.out.println(brr[2]);
-			}
-			System.out.println("######################################### Vulnerability count #########################################");
-			System.out.println(leastVulCount);
-			
-			break;
+			FinalChanges.putAll(leastVulCountCombinationMap);
 		}
+		
+		String key = "";
+		int leastVulCount = 0;
+		for (Map.Entry<String, Integer> entry : FinalChanges.entrySet()) {
+//		    System.out.println("Key: " + entry.getKey() + ", Value: " + entry.getValue().size());
+		    key = entry.getKey();
+		    leastVulCount = entry.getValue();
+		}
+		
+		System.out.println();
+		System.out.println("############################################ Final Changes #################################");
+
+		String[] arr = key.split(",");
+		for(String a : arr)
+		{
+			System.out.println();
+			String[] brr = a.split("#");
+			System.out.println(brr[0]);
+			System.out.println(brr[1]);
+			System.out.println(brr[2]);
+		}
+//		System.out.println("######################################### Vulnerability count #########################################");
+//		System.out.println(leastVulCount);
 		
 		// final combinations
 //		POMOptimization.optimizePOMRecommendations(pomDependencies, pomRecommendations);
